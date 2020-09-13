@@ -12,10 +12,11 @@ namespace example
     {
       Log.Logger = new LoggerConfiguration()
         .Enrich.FromLogContext()
-        //.WriteTo.Console()
-        // RenderedCompactJsonFormatter 는 Seq logger 와 어울림
-        .WriteTo.Console(new RenderedCompactJsonFormatter())
-        .WriteTo.File(new RenderedCompactJsonFormatter(), "/logs/log.ndjson")
+        .WriteTo.Console()
+        //.WriteTo.Console(new RenderedCompactJsonFormatter()) // RenderedCompactJsonFormatter 는 Seq logger 와 어울림
+        //.WriteTo.File(new RenderedCompactJsonFormatter(), "/logs/log.ndjson")
+        //.WriteTo.Seq("http://localhost:5341")
+        .WriteTo.Seq(Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://loclhost:5341")
         .CreateLogger();
 
       try
