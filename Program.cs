@@ -16,7 +16,12 @@ namespace example
         .Enrich.FromLogContext()
         .WriteTo.Console()
         //.WriteTo.Console(new RenderedCompactJsonFormatter()) // RenderedCompactJsonFormatter 는 Seq logger 와 어울림
-        .WriteTo.File(new RenderedCompactJsonFormatter(), "./logs/log.json")
+        .WriteTo.File(
+          new RenderedCompactJsonFormatter(),
+          "./logs/log.json",
+          rollingInterval: RollingInterval.Day, 
+          rollOnFileSizeLimit: true, // maximum 1GB, could be null
+          retainedFileCountLimit: 31) // number of files, could be null
         //.WriteTo.Seq("http://localhost:5341")
         .WriteTo.Seq(Environment.GetEnvironmentVariable("SEQ_URL") ?? "http://localhost:5341")
         .CreateLogger();
