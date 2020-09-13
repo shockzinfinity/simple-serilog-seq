@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Formatting.Compact;
 using System;
 
 namespace example
@@ -11,7 +12,10 @@ namespace example
     {
       Log.Logger = new LoggerConfiguration()
         .Enrich.FromLogContext()
-        .WriteTo.Console()
+        //.WriteTo.Console()
+        // RenderedCompactJsonFormatter 는 Seq logger 와 어울림
+        .WriteTo.Console(new RenderedCompactJsonFormatter())
+        .WriteTo.File(new RenderedCompactJsonFormatter(), "/logs/log.ndjson")
         .CreateLogger();
 
       try
