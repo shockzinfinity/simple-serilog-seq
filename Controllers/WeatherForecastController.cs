@@ -13,8 +13,8 @@ namespace example.Controllers
   {
     private static readonly string[] Summaries = new[]
     {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+      "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+    };
 
     private readonly ILogger<WeatherForecastController> _logger;
 
@@ -26,6 +26,10 @@ namespace example.Controllers
     [HttpGet]
     public IEnumerable<WeatherForecast> Get()
     {
+      // ILogger 를 Serilog 가 구현하고 있는지 확인
+      //_logger.LogInformation($"로거: {_logger.GetType()}");
+      //_logger.LogInformation(nameof(Get));
+
       var rng = new Random();
       return Enumerable.Range(1, 5).Select(index => new WeatherForecast
       {
